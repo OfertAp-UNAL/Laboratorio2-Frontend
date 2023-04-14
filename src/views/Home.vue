@@ -11,16 +11,21 @@
       <div class="col-sm-4 text-center ofertapp-link-container">
         <router-link :to="{ name: 'courses' }" class="ofertapp-link stretched-link">Mis cursos</router-link>
       </div>
-    </div>
-    <div class="row" v-show="isTeacher">
       <div class="col-sm-4 text-center ofertapp-link-container">
+        <router-link :to="{ name: 'add-association' }" class="ofertapp-link stretched-link">Registrarme en un
+          curso</router-link>
+      </div>
+      <div class="col-sm-4 text-center ofertapp-link-container" v-show="isTeacher">
         <router-link :to="{ name: 'add-course' }" class="ofertapp-link stretched-link">Crear un curso</router-link>
       </div>
-      <div class="col-sm-4 text-center ofertapp-link-container">
-        <router-link :to="{ name: 'view-subscribed' }" class="ofertapp-link stretched-link">Crear un periodo</router-link>
+      <div class="col-sm-4 text-center ofertapp-link-container" v-show="isTeacher">
+        <router-link :to="{ name: 'add-period' }" class="ofertapp-link stretched-link">Crear un periodo</router-link>
+      </div>
+      <div class="col-sm-4 text-center ofertapp-link-container" v-show="isTeacher">
+        <router-link :to="{ name: 'view-subscribed' }" class="ofertapp-link stretched-link">Ver inscritos</router-link>
       </div>
       <div class="col-sm-4 text-center ofertapp-link-container">
-        <router-link :to="{ name: 'view-subscribed' }" class="ofertapp-link stretched-link">Ver inscritos</router-link>
+        <router-link :to="{ name: 'logout' }" class="ofertapp-link stretched-link">Cerrar Sesión</router-link>
       </div>
     </div>
     <div class="row">

@@ -2,12 +2,15 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import SignUp from "./views/SignUp";
 import Login from "./views/Login";
+import Logout from "./views/Logout";
 import Home from "./views/Home";
 import AddRole from "./components/AddRole";
+import AddPeriod from "./components/AddPeriod";
 import Courses from '@/views/Courses';
 import Roles from "@/components/Roles";
 import AddCourse from "@/components/AddCourse";
 import SubscribedStudents from "@/components/SubscribedStudents";
+import Subscribe from "@/components/AddAssociation";
 
 Vue.use(Router);
 
@@ -19,6 +22,11 @@ export default new Router({
       path: "/registro",
       name: "signup",
       component: SignUp
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: Logout
     },
     {
       path: "/",
@@ -50,6 +58,16 @@ export default new Router({
           path: '/nuevo-curso',
           name: 'add-course',
           component: AddCourse
+        },
+        {
+          path: '/nuevo-periodo',
+          name: 'add-period',
+          component: AddPeriod
+        },
+        {
+          path: '/inscribir',
+          name: 'subscribe',
+          component: Subscribe
         },
         {
           path: '/ver-inscritos',

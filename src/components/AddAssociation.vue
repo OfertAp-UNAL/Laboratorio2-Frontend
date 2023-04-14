@@ -1,25 +1,26 @@
 <template>
     <div class="col-12 col-sm-10 col-md-8 offset-sm-1 offset-md-2">
         <div class="mt-5">
-            <form class="border border-primary rounded form-inline" @submit="createCourse">
+            <form class="border border-primary rounded form-inline" @submit="associate">
 
-                <h2 class="col-12 text-center text-primary mt-3 mb-5 ofertapp-label">Agregue un curso</h2>
+                <h2 class="col-12 text-center text-primary mt-3 mb-5 ofertapp-label">Inscribase en un curso</h2>
 
                 <div class="form-group col-12">
-                    <label for="courseName" class="custom-label col-md-3">Nombre del curso</label>
-                    <input id="courseName" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" type="text"
-                        placeholder="Nombre" v-model="name" required />
+                    <label for="password" class="custom-label col-md-3">Contrase&ntilde;a</label>
+                    <input id="password" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" type="password"
+                        placeholder="Contraseña" v-model="password" required />
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="courseDuration" class="custom-label col-md-3">Duración del curso</label>
-                    <input id="courseDuration" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" type="number"
-                        min="0" step="1" placeholder="Duración en horas (Entero)" v-model="duration" required />
+                    <label class="custom-label col-md-3 display" for="rol">Tipo de Usuario</label>
+                    <select id="rol" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" v-model="role" required>
+                        <option value="" disabled selected>-- Seleccione un Rol --</option>
+                        <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.roleName }}</option>
+                    </select>
                 </div>
-
                 <div class="col-12 mb-3">
                     <button class="col-sm-6 col-md-4 offset-sm-5 offset-md-7 btn btn-primary ofertapp-button" type="submit">
-                        Crear Curso
+                        Asociar Rol
                     </button>
                 </div>
 
@@ -33,23 +34,34 @@ import axios from 'axios';
 import { getAuthenticationToken } from '@/dataStorage';
 
 export default {
-    name: "AddCourse",
+    name: "AddAssociation",
     data() {
         return {
-            name: '',
-            duration: 0,
+            password: '',
+            role: '',
+            roles: [],
         }
     },
-    beforeCreate() { },
+    beforeCreate() {
+        const rolesPath = '/roles';
+        axios
+            .get(this.$store.state.backURL + rolesPath)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Error en la petición. Intente nuevamente")
+                } else {
+                    this.roles = response.data;
+                }
+            }).catch(response => {
+                alert("No es posible conectar con el backend en este momento");
+            });
+    },
     methods: {
-
-        createCourse(event) {
-            console.log(this.name);
-            console.log(typeof (this.duration));
+        associate(event) {
+            console.log(this.buildURI())
             axios
                 .post(this.buildURI(), {
-                    courseName: this.name,
-                    durationHours: parseInt(this.duration)
+                    password: this.password
                 }, {
                     params: {
                         access_token: getAuthenticationToken()
@@ -59,13 +71,13 @@ export default {
                     if (response.status !== 201) {
                         alert("Error en la petición. Intente nuevamente");
                     } else {
-                        alert("Se ha creado exitosamente el nuevo curso");
+                        alert("Se ha asignado exitosamente el nuevo rol");
                     }
                 }).catch(response => {
                     if (response.response.status === 401) {
                         alert("¡Ups! Al parecer tu contraseña es incorrecta o la sesión ha finalizado");
                     } else if (response.response.status === 400) {
-                        alert("Revisa la validez de tus datos");
+                        alert("¿Estás seguro de que aún no tienes ese rol asignado?");
                     } else {
                         alert("No es posible conectar con el backend en este momento");
                     }
@@ -73,9 +85,8 @@ export default {
             event.preventDefault();
         },
         buildURI() {
-            let associatePath = '/profesor/crear-curso';
-            console.log(this.$store.state.backURL + associatePath);
-            return this.$store.state.backURL + associatePath;
+            let associatePath = "/registro/nuevo-rol/";
+            return this.$store.state.backURL + associatePath + this.role;
         }
     }
 

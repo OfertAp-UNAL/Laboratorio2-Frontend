@@ -2,7 +2,7 @@
     <div class="col-12 col-sm-10 col-md-8 offset-sm-1 offset-md-2">
         <div class="mt-5">
             <div class="row text-center">
-                <h2 class="col-12">Tus roles son</h2>
+                <h2 class="col-12">Los estudiantes de tus cursos son:</h2>
             </div>
             <div class="row text-center">
                 <div class="ofertapp-roleinfo col-md-3" v-for="role in roles" :key="role.id">
