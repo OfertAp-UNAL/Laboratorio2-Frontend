@@ -6,6 +6,8 @@ import Home from "./views/Home";
 import AddRole from "./components/AddRole";
 import Courses from '@/views/Courses';
 import Roles from "@/components/Roles";
+import AddCourse from "@/components/AddCourse";
+import SubscribedStudents from "@/components/SubscribedStudents";
 
 Vue.use(Router);
 
@@ -25,11 +27,6 @@ export default new Router({
       component: Login
     },
     {
-      path: '/mis-cursos',
-      name: 'courses',
-      component: Courses
-    },
-    {
       path: "/principal",
       name: "home",
       component: Home,
@@ -43,6 +40,21 @@ export default new Router({
           path: "roles",
           name: "roles",
           component: Roles
+        },
+        {
+          path: '/mis-cursos',
+          name: 'courses',
+          component: Courses
+        },
+        {
+          path: '/nuevo-curso',
+          name: 'add-course',
+          component: AddCourse
+        },
+        {
+          path: '/ver-inscritos',
+          name: 'view-subscribed',
+          component: SubscribedStudents
         }
       ]
     }

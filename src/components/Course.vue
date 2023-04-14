@@ -1,8 +1,8 @@
 <template>
-  <div class="col-12 col-md-6 col-lg-4 text-center">
-    <h1><b>Nombre Curso:</b>{{ enrolled.courseName }}</h1>
-    <h3>{{ enrolled.courseDurationHours }}</h3>
-    <h6>{{ enrolled.role.roleName }}</h6>
+  <div class="col-lg-4 col-md-6 col-sm-12 text-center ofertapp-card">
+    <h3>{{ enrolled.courseName }}</h3>
+    <h4>Duración: {{ enrolled.courseDurationHours }}</h4>
+    <h4>Rol: {{ enrolled.role.roleName }}</h4>
   </div>
 </template>
 
@@ -16,5 +16,11 @@ export default {
 </script>
 
 <style scoped>
-
+.ofertapp-card {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  border-style: solid !important;
+}
 </style>
