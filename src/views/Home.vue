@@ -12,7 +12,7 @@
         <router-link :to="{ name: 'courses' }" class="ofertapp-link stretched-link">Mis cursos</router-link>
       </div>
       <div class="col-sm-4 text-center ofertapp-link-container">
-        <router-link :to="{ name: 'add-association' }" class="ofertapp-link stretched-link">Registrarme en un
+        <router-link :to="{ name: 'subscribe' }" class="ofertapp-link stretched-link">Registrarme en un
           curso</router-link>
       </div>
       <div class="col-sm-4 text-center ofertapp-link-container" v-show="isTeacher">
@@ -59,13 +59,11 @@ export default {
         } else {
           const roles = response.data;
           const teacherRole = roles.find(role => role.roleName === 'Profesor');
-          console.log(teacherRole)
           this.isTeacher = teacherRole !== undefined;
 
         }
       }).catch(error => {
         alert('Error en la petición');
-        console.log(error);
       });
   }
 }

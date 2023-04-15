@@ -127,7 +127,7 @@ export default {
             alert("Error en el almacenamiento del usuario")
           } else {
             alert("Usuario registrado correctamente")
-            this.$router.push({ name: 'home' });
+            this.$router.push({ name: 'login' });
           }
         }).catch(error => {
           if (error.response.status === 400) {

@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     associate(event) {
-      console.log(this.buildURI())
       axios
         .post(this.buildURI(), {
           password: this.password

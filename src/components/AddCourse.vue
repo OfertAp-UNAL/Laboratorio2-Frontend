@@ -44,8 +44,6 @@ export default {
     methods: {
 
         createCourse(event) {
-            console.log(this.name);
-            console.log(typeof (this.duration));
             axios
                 .post(this.buildURI(), {
                     courseName: this.name,
@@ -74,7 +72,6 @@ export default {
         },
         buildURI() {
             let associatePath = '/profesor/crear-curso';
-            console.log(this.$store.state.backURL + associatePath);
             return this.$store.state.backURL + associatePath;
         }
     }

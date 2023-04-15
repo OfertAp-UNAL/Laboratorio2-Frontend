@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 col-sm-10 col-md-8 offset-sm-1 offset-md-2">
+  <div class="col-12 col-sm-4 col-md-6 offset-sm-1 offset-md-2">
     <div class="mt-5">
       <div class="row text-center">
         <h2 class="col-12">Tus cursos son</h2>

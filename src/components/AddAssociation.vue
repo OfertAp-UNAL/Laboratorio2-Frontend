@@ -6,21 +6,35 @@
                 <h2 class="col-12 text-center text-primary mt-3 mb-5 ofertapp-label">Inscribase en un curso</h2>
 
                 <div class="form-group col-12">
-                    <label for="password" class="custom-label col-md-3">Contrase&ntilde;a</label>
-                    <input id="password" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" type="password"
-                        placeholder="Contraseña" v-model="password" required />
-                </div>
-
-                <div class="form-group col-12">
                     <label class="custom-label col-md-3 display" for="rol">Tipo de Usuario</label>
                     <select id="rol" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" v-model="role" required>
                         <option value="" disabled selected>-- Seleccione un Rol --</option>
                         <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.roleName }}</option>
                     </select>
                 </div>
+
+                <div class="form-group col-12">
+                    <label class="custom-label col-md-3 display" for="period">Periodo</label>
+                    <select id="period" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" v-model="period"
+                        required>
+                        <option value="" disabled selected>-- Seleccione un Periodo --</option>
+                        <option v-for="period in periods" :key="period.id" :value="period.id">{{ period.periodName }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="custom-label col-md-3 display" for="course">Curso</label>
+                    <select id="course" class="form-control col-12 col-sm-10 col-md-7 offset-sm-1" v-model="course"
+                        required>
+                        <option value="" disabled selected>-- Seleccione un Curso --</option>
+                        <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.courseName }}
+                        </option>
+                    </select>
+                </div>
                 <div class="col-12 mb-3">
                     <button class="col-sm-6 col-md-4 offset-sm-5 offset-md-7 btn btn-primary ofertapp-button" type="submit">
-                        Asociar Rol
+                        Suscribirme
                     </button>
                 </div>
 
@@ -39,13 +53,22 @@ export default {
         return {
             password: '',
             role: '',
+            period: '',
+            course: '',
             roles: [],
+            periods: [],
+            courses: []
         }
     },
     beforeCreate() {
-        const rolesPath = '/roles';
+        // Read all roles
+        const rolesPath = '/mis-roles';
         axios
-            .get(this.$store.state.backURL + rolesPath)
+            .get(this.$store.state.backURL + rolesPath, {
+                params: {
+                    access_token: getAuthenticationToken()
+                }
+            })
             .then(response => {
                 if (response.status !== 200) {
                     alert("Error en la petición. Intente nuevamente")
@@ -55,10 +78,37 @@ export default {
             }).catch(response => {
                 alert("No es posible conectar con el backend en este momento");
             });
+
+        // Read all periods
+        const periodsPath = '/periodos';
+        axios
+            .get(this.$store.state.backURL + periodsPath)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Error en la petición. Intente nuevamente")
+                } else {
+                    this.periods = response.data;
+                }
+            }).catch(response => {
+                alert("No es posible conectar con el backend en este momento");
+            });
+
+        // Read all courses
+        const coursesPath = '/cursos';
+        axios
+            .get(this.$store.state.backURL + coursesPath)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Error en la petición. Intente nuevamente")
+                } else {
+                    this.courses = response.data;
+                }
+            }).catch(response => {
+                alert("No es posible conectar con el backend en este momento");
+            });
     },
     methods: {
         associate(event) {
-            console.log(this.buildURI())
             axios
                 .post(this.buildURI(), {
                     password: this.password
@@ -71,13 +121,13 @@ export default {
                     if (response.status !== 201) {
                         alert("Error en la petición. Intente nuevamente");
                     } else {
-                        alert("Se ha asignado exitosamente el nuevo rol");
+                        alert("Se ha inscrito correctamente");
                     }
                 }).catch(response => {
                     if (response.response.status === 401) {
                         alert("¡Ups! Al parecer tu contraseña es incorrecta o la sesión ha finalizado");
                     } else if (response.response.status === 400) {
-                        alert("¿Estás seguro de que aún no tienes ese rol asignado?");
+                        alert("Revise los datos ingresados");
                     } else {
                         alert("No es posible conectar con el backend en este momento");
                     }
@@ -85,8 +135,11 @@ export default {
             event.preventDefault();
         },
         buildURI() {
-            let associatePath = "/registro/nuevo-rol/";
-            return this.$store.state.backURL + associatePath + this.role;
+            let associatePath = "/inscribir/rol/" +
+                this.role + "/periodo/" +
+                this.period + "/curso/" +
+                this.course;
+            return this.$store.state.backURL + associatePath;
         }
     }
 

@@ -9,7 +9,7 @@ import AddPeriod from "./components/AddPeriod";
 import Courses from '@/views/Courses';
 import Roles from "@/components/Roles";
 import AddCourse from "@/components/AddCourse";
-import SubscribedStudents from "@/components/SubscribedStudents";
+import SubscribedStudents from "@/views/SubscribedStudents";
 import Subscribe from "@/components/AddAssociation";
 
 Vue.use(Router);

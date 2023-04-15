@@ -63,7 +63,6 @@ export default {
         },
         buildURI() {
             let associatePath = '/profesor/crear-periodo';
-            console.log(this.$store.state.backURL + associatePath);
             return this.$store.state.backURL + associatePath;
         }
     }

@@ -1,8 +1,9 @@
 <template>
-  <div class="col-lg-4 col-md-6 col-sm-12 text-center ofertapp-card">
+  <div class="col-12 col-md-4 text-center ofertapp-card">
     <h3>{{ enrolled.courseName }}</h3>
     <h4>Duración: {{ enrolled.courseDurationHours }}</h4>
     <h4>Rol: {{ enrolled.role.roleName }}</h4>
+    <h4>Periodo: {{ enrolled.periodName }}</h4>
   </div>
 </template>
 

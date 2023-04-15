@@ -37,7 +37,6 @@ export default {
         }
       }).catch(error => {
         alert('Error en la petición');
-        console.log(error);
       });
   }
 }
